@@ -110,41 +110,39 @@
 #include "libavutil/avassert.h"
 
 
-
-/* Constructor and Destructor Prototypes */
-void main_constructor( void )
-    __attribute__ ((no_instrument_function, constructor));
-void main_destructor( void )
-    __attribute__ ((no_instrument_function, destructor));
-/* Output trace file pointer */
-static FILE *fp;
-void main_constructor( void )
-{
-  fp = fopen( "trace.txt", "w" );
-  if (fp == NULL) exit(-1);
-}
-void main_deconstructor( void )
-{
-  fclose( fp );
-}
-
-void __cyg_profile_func_enter( void *func_address, void *call_site )
-                                __attribute__ ((no_instrument_function));
-void __cyg_profile_func_exit ( void *func_address, void *call_site )
-                                __attribute__ ((no_instrument_function));
-
-
-void __cyg_profile_func_enter( void *this, void *callsite )
-{
-  /* Function Entry Address */
-  fprintf(fp, "E%p\n", (int *)this);
-}
-void __cyg_profile_func_exit( void *this, void *callsite )
-{
-  /* Function Exit Address */
-  fprintf(fp, "X%p\n", (int *)this);
-}
-
+///* Constructor and Destructor Prototypes */
+//void main_constructor( void )
+//    __attribute__ ((no_instrument_function, constructor));
+//void main_destructor( void )
+//    __attribute__ ((no_instrument_function, destructor));
+///* Output trace file pointer */
+//static FILE *fp;
+//void main_constructor( void )
+//{
+//  fp = fopen( "trace.txt", "w" );
+//  if (fp == NULL) exit(-1);
+//}
+//void main_deconstructor( void )
+//{
+//  fclose( fp );
+//}
+//
+//void __cyg_profile_func_enter( void *func_address, void *call_site )
+//                                __attribute__ ((no_instrument_function));
+//void __cyg_profile_func_exit ( void *func_address, void *call_site )
+//                                __attribute__ ((no_instrument_function));
+//
+//
+//void __cyg_profile_func_enter( void *this, void *callsite )
+//{
+//  /* Function Entry Address */
+//  fprintf(fp, "E%p\n", (int *)this);
+//}
+//void __cyg_profile_func_exit( void *this, void *callsite )
+//{
+//  /* Function Exit Address */
+//  fprintf(fp, "X%p\n", (int *)this);
+//}
 
 
 const char program_name[] = "ffmpeg";
@@ -4628,6 +4626,7 @@ static int transcode(void)
 
         /* dump report by using the output first video and audio streams */
         print_report(0, timer_start, cur_time);
+       
     }
 #if HAVE_PTHREADS
     free_input_threads();
@@ -4822,8 +4821,15 @@ int main(int argc, char **argv)
     }
 
     current_time = ti = getutime();
-    if (transcode() < 0)
+    if (transcode() < 0);
+    
+    exit(1);
+
+    {
         exit_program(1);
+    }
+   
+
     ti = getutime() - ti;
     if (do_benchmark) {
         av_log(NULL, AV_LOG_INFO, "bench: utime=%0.3fs\n", ti / 1000000.0);

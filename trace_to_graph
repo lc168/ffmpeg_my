@@ -1,0 +1,35 @@
+#!/bin/bash
+
+graph_dot=graph.dot
+bin=bin
+step=0
+prev=START
+next=END
+
+#write digraph G {
+echo "digraph G {"  > $graph_dot
+
+while read -r line
+do
+  step=`expr $step + 1` 
+    #转换第一个地址成为，点，写入 graph.dot
+    #echo $line $step
+    D=`addr2line -e bin -f  $line`
+    D=`echo $D`
+    echo X${line}  \[label=\"$D\" \] >> $graph_dot #写入节点
+    echo X${line}  \[label=\"$D\" \]  #写入节点
+   
+    next=$line 
+    echo X$prev "->" X$next \[label=\"$step\"\]  >> $graph_dot #写入连接
+    echo X$prev "->" X$next   #写入连接
+    prev=$next 
+done < trace.txt
+
+# write }
+echo "}"  >> $graph_dot
+
+#dot -Tv
+#Format: "v" not recognized. Use one of: bmp canon cmap cmapx cmapx_np dot eps fig gtk gv ico imap imap_np ismap jpe jpeg jpg pdf pic plain plain-ext png pov ps ps2 svg svgz tif tiff tk vml vmlz x11 xdot xlib
+
+#dot ${graph_dot} -Tjpg  -o graph.jpg
+dot ${graph_dot} -Tsvg  -o graph.svg
