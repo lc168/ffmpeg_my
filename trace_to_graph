@@ -6,6 +6,12 @@ step=0
 prev=START
 next=END
 
+get_point()
+{
+  echo liucheng  $1
+}
+
+
 #write digraph G {
 echo "digraph G {"  > $graph_dot
 
@@ -16,12 +22,13 @@ do
     #echo $line $step
     D=`addr2line -e bin -f  $line`
     D=`echo $D`
+    get_point good
     echo X${line}  \[label=\"$D\" \] >> $graph_dot #写入节点
-    echo X${line}  \[label=\"$D\" \]  #写入节点
+  #  echo X${line}  \[label=\"$D\" \]  #写入节点
    
     next=$line 
     echo X$prev "->" X$next \[label=\"$step\"\]  >> $graph_dot #写入连接
-    echo X$prev "->" X$next   #写入连接
+  #  echo X$prev "->" X$next   #写入连接
     prev=$next 
 done < trace.txt
 
