@@ -494,7 +494,6 @@ static int read_key(void)
 
 static int decode_interrupt_cb(void *ctx)
 {
-    my_exit();
     return received_nb_signals > atomic_load(&transcode_init_done);
 }
 
@@ -2311,7 +2310,6 @@ static int decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacke
     if (ret >= 0)
         *got_frame = 1;
 
-    my_exit();
     return 0;
 }
 
