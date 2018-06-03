@@ -8,7 +8,7 @@ next=END
 
 get_point()
 {
-  echo liucheng  $1
+  echo $1
 }
 
 
@@ -21,8 +21,8 @@ do
     #转换第一个地址成为，点，写入 graph.dot
     #echo $line $step
     D=`addr2line -e bin -f  $line`
-    D=`echo $D`
-    get_point good
+    D=`get_point $D`
+    #D=`echo $D`
     echo X${line}  \[label=\"$D\" \] >> $graph_dot #写入节点
   #  echo X${line}  \[label=\"$D\" \]  #写入节点
    

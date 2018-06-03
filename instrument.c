@@ -52,3 +52,15 @@ void __cyg_profile_func_exit( void *this, void *callsite )
 //  fprintf(fp, "X%p\n", (int *)this);
 }
 
+
+void my_exit()
+{
+  static int i = 0;
+  i++;
+  //if(i > 2499)
+  if(i > 2500)
+  {
+    exit(1);
+  }
+  return;
+}

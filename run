@@ -2,3 +2,5 @@
 
 #./bin -c:v h264_cuvid -i  rtsp://admin:abc123456789@192.168.0.108:554/MPEG-4/ch1/main/av_stream   %03d.jpg
 ./bin  -i  rtsp://admin:abc123456789@192.168.0.108:554/MPEG-4/ch1/main/av_stream   %03d.jpg
+
+cat trace.txt | wc -l
