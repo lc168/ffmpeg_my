@@ -14,8 +14,8 @@ do
     #echo $D
     F=`addr2line -e $bin -f $D`
     F=`echo $F | awk '{ print $1 }'`
-    echo ${F}{ >> sfun.txt
-    echo ${F}{
+    echo ${F} $line  >> sfun.txt
+    #echo ${F}{
  fi 
  
 done < trace.txt

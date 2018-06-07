@@ -10,6 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <sys/types.h>
+#include <unistd.h>
+
 /* Function prototypes with attributes */
 void main_constructor( void )
 	__attribute__ ((no_instrument_function, constructor));
@@ -48,7 +51,7 @@ void __cyg_profile_func_enter( void *this, void *callsite )
    fprintf(fp, " ");
   }
 
-  fprintf(fp, "%p{\n", (int *)this);
+  fprintf(fp, "%p{(%d)\n", (int *)this, getpid());
 
   enter++;
 }
