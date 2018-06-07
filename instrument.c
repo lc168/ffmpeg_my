@@ -39,17 +39,31 @@ void main_deconstructor( void )
   fclose( fp );
 }
 
-
+int enter=0;
 void __cyg_profile_func_enter( void *this, void *callsite )
 {
-  //fprintf(fp, "E%p\n", (int *)this);
-  fprintf(fp, "%p\n", (int *)this);
+  int i;
+  for (i = 0; i < enter; i++)
+  {
+   fprintf(fp, " ");
+  }
+
+  fprintf(fp, "%p{\n", (int *)this);
+
+  enter++;
 }
 
 
 void __cyg_profile_func_exit( void *this, void *callsite )
 {
-//  fprintf(fp, "X%p\n", (int *)this);
+  int i;
+  enter--;
+  for (i = 0; i < enter; i++)
+  {
+   fprintf(fp, " ");
+  }
+
+  fprintf(fp, "}\n", (int *)this);
 }
 
 

@@ -1,0 +1,21 @@
+#!/bin/bash
+bin=./bin
+
+echo "" > sfun.txt
+
+while read -r line
+do
+ echo $line | grep "0x[0-9a-z]*"  > /dev/null
+ if [ $? == 1 ]  
+ then
+    echo  $line >>  sfun.txt
+ else
+    D=`echo $line | sed 's/{//'`
+    #echo $D
+    F=`addr2line -e $bin -f $D`
+    F=`echo $F | awk '{ print $1 }'`
+    echo ${F}{ >> sfun.txt
+    echo ${F}{
+ fi 
+ 
+done < trace.txt
